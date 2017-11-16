@@ -1,0 +1,38 @@
+Main.py为主程序，包括语音识别，语音命令，机器人对话，语音合成的功能，依赖于下面的功能模块：
+
+	1.baidu_voice_Module   ----百度语音识别/语音合成
+		---1）Speech_To_Text(speech_path)    -----输入speech文件的路径，返回得识别结果(列表形式)
+		----2）Text_To_Speech(target_text)        -----输入文本，返回合成的speech文件的路径
+	
+	2.tuling_robot_Module      ----图灵机器人聊天的模块
+		----1）Get_Tuling_Result(info)      -----输入文本到此函数，返回图灵回应的文本
+
+	3.xiaoice_robot_Module      ----小冰机器人聊天的模块
+		----1）Get_Weibo_Xiaoice_Result(info)    ---输入文本到此函数，返回小冰回应的文本
+
+	4.Print_With_Style_Module   ----带格式的打印
+		----1）Print_With_Style(p_str, p_style)   ----输入要打印的字符与格式即可按格式打印字符串
+
+	5.WOL_Module      ----WOL(网络唤醒)的模块
+		----1）Wake_Up_Computer()   -------唤醒计算机，唤醒的机器由Config.ini决定
+	
+	6.Speech_Command_Module     ------本模块为处理语音命令的模块，用于将语音文本内的部分命令放入到command_temp.txt文本中，再由Chack_Commands模块检查并执行
+		----1）Append_Speech_Command(speech_text)    -----输入语音文本，生成命令语句并放到command_temp.txt文本中
+	7.Time_Sign_Module      ------从语音识别文本中获取时间标记的模块，主要被Speech_Command_Module模块调用，用于生成命令语句的时间部分
+		----1）Get_Time_Sign(speech_text)   ------获取时间标记--它是一个目标时间datetime对象，无时间标记时返回None
+	8.Chack_Commands_Module    ------检查并执行command_temp.txt文本中的命令语句，并且返回回复语
+		----1）Chack_Commands()     -------检查并执行命令语句的函数，它需要在线程内不断执行以及时响应
+		----2）Write_Commands_Back_To_File()，用在finally中，遇到错误时把命令写回文本中
+	9.
+
+
+
+支持的语音命令：
+例：一个小时后叫我起床
+十九点三十八叫我吃饭     （"时间点"可以不包含单位"分"）
+晚上七点三十五分叫我吃饭
+明天的这个时候叫我起床
+一小时三十八秒后打开电灯 ("一段时间后"需要包含时间单位，如"小时","分/分钟","秒")
+设一个明天早上七点十分的闹钟
+设一个下午七点半的闹钟   ("设"不是必要的)
+
